@@ -1,28 +1,25 @@
-public class Vetor {
-    private String[] elementos;
+public class VetorObjeto {
+    private Object[] elementos;
     private int tamanho;
-
-//    Metodo de Adicionar a capacidade de elementos
-    public Vetor(int capacidade) { // Parametro que indica o tam do vetor
-        this.elementos = new String[capacidade];
+    public VetorObjeto(int capacidade) {
+        this.elementos = new Object[capacidade];
         this.tamanho = 0;
     }
 
-//    Metodo de Adicionar Novos Elementos
-    public void adicionar(String elemento) throws Exception{
+    public void adiciona(Object elemento) throws Exception {
         this.aumentaCapacidade();
         if (this.tamanho < this.elementos.length) {
             this.elementos[this.tamanho] = elemento;
             this.tamanho++;
         } else {
-            throw new Exception("O vetor já está cheio, " + "não é possivel adicionar novos elementos");
+            throw new Exception("O vetor já está cheio");
         }
     }
+
     public int tamanho() {
         return this.tamanho;
     }
 
-//    Metodo para mostrar ao usuário
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -33,7 +30,7 @@ public class Vetor {
             s.append(", ");
         }
 
-        if(this.tamanho > 0) {
+        if (this.tamanho > 0) {
             s.append(this.elementos[this.tamanho-1]);
         }
 
@@ -42,8 +39,7 @@ public class Vetor {
         return s.toString();
     }
 
-//    Metodo de buscar
-    public String buscar(int posicao) throws Exception {
+    public Object busca (int posicao) throws Exception {
         if (posicao >= 0 && posicao < tamanho) {
             return elementos[posicao];
         } else {
@@ -51,51 +47,51 @@ public class Vetor {
         }
     }
 
-//    metodo de buscar a posição
-    public int busca1(String elemento) {
+    public int buscaPos(Object elemento) {
         for(int i = 0; i < tamanho; i++) {
-            if(elementos[i].equals(elemento)) {
+            if (elementos[i].equals(elemento)) {
                 return i;
             }
         }
         return -1;
     }
 
-//    Adicionar no inicio
-    public boolean adicionarInicio(int posicao, String elemento) throws Exception {
+    public boolean adicionarInicio(int posicao, Object elementos) throws Exception {
         this.aumentaCapacidade();
         if (posicao >= 0 && posicao < tamanho) {
-            for(int i = this.tamanho-1; i>posicao; i--) {
+            for (int i = this.tamanho-1; i>posicao; i--) {
                 this.elementos[i+1] = this.elementos[i];
             }
-            this.elementos[posicao] = elemento;
+            this.elementos[posicao] = elementos;
             this.tamanho++;
-        } else {
+        }
+
+        else {
             throw new Exception("Posição Inválida");
         }
+
         return true;
     }
 
-//    Método para aumentar a capacidade do vetor
-    public void aumentaCapacidade() {
-        if (this.tamanho == this.elementos.length) {
-            String[] elementosNovos = new String[this.elementos.length * 2];
-            for(int i = 0; i < this.elementos.length; i++) {
+    private void aumentaCapacidade() {
+        if(this.tamanho == this.elementos.length) {
+            Object[] elementosNovos = new Object[this.elementos.length * 2];
+            for (int i = 0; i<this.elementos.length; i++) {
                 elementosNovos[i] = this.elementos[i];
             }
             this.elementos = elementosNovos;
         }
     }
 
-//    Método Remover elementos
     public void remove(int posicao) throws Exception {
         if(posicao >= 0 && posicao < tamanho) {
-            for(int i = posicao; i < this.tamanho; i--) {
+            for (int i = posicao; i<this.tamanho-1; i++) {
                 this.elementos[i] = this.elementos[i+1];
             }
             this.tamanho--;
-        } else {
+        }
+        else {
             throw new Exception("Posição Inválida");
         }
     }
- }
+}
